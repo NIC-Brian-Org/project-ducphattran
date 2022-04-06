@@ -2,6 +2,11 @@ body {
     background-image: url("./images/background.jpg");
 }
 
+h1 {
+    background-color: #748cab;
+    border-radius: 50px;
+}
+
 #market img,
 #inventory img {
     width: 100%;
@@ -20,4 +25,18 @@ body {
 #market:hover p,
 #inventory:hover p {
     color: white;
+}
+
+#land-group {
+    background-color: #BBCBCB;
+    border-radius: 20px;
+}
+
+.harvest_amount {
+    color: white;
+}
+
+.land:hover {
+  /* box-shadow: 5px 10px #888888; */
+  background-color: #3066BE;
 }
