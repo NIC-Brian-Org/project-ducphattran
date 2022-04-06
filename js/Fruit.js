@@ -5,7 +5,7 @@ class Fruit {
         this.id = _fruitId
         this.name = _name
         this.price = _price
-        this.quantityInStock = _quantity
+        this.quantity = _quantity
         this.imageSrc = _imageSrc
     }
 
