@@ -55,3 +55,16 @@ h1 {
 .land-detail span {
     font-size: 18px;
 }
+
+.fruit {
+    background-color: #b9c1cd;
+}
+
+.fruit:hover, .fruit.selected {
+    cursor: pointer;
+    background-color: #7A89C2;
+}
+
+.fruit:hover, .fruit.selected span {
+    color: white;
+}
