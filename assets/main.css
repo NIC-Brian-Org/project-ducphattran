@@ -37,6 +37,21 @@ h1 {
 }
 
 .land:hover {
-  /* box-shadow: 5px 10px #888888; */
-  background-color: #3066BE;
+    background-color: #3066BE;
+  cursor: pointer;
+}
+
+.land-detail {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+}
+
+.land-detail span {
+    font-size: 18px;
 }
