@@ -7,18 +7,12 @@ const lands = []
 setFruits()
 setLands()
 
-/**
- * 
- */
-
-
 
 /**
  *  RENDER
  */
 
-function setFruits() {
-
+ function setFruits() {
     // Create Fruit objects
     mockupFruits.forEach((mockupFruit) => {
         const { id, name, price, quantity, imageSrc } = mockupFruit
@@ -144,7 +138,6 @@ function createFruitInventoryUI(_fruit) {
  * */
 function setLands() {
     // Create land objects
-    // for (let i=0; i < lands.length; i++){
     mockupLands.forEach((mockupLand) => {
         const { id, status, fruitId, harvestAmount } = mockupLand
         const newLand = new Land(id, status, fruitId, harvestAmount)
@@ -152,13 +145,13 @@ function setLands() {
     })
 
     // Render  UI
-    renderLands(mockupLands)
+    renderLands()
 }
 
 /**
  *  Create a row containing 3 lands
  */
-function renderLands(_lands) {
+function renderLands() {
     const landGroups = document.getElementsByClassName("land-group")
     let currentLandIndex = 0
 
@@ -169,7 +162,7 @@ function renderLands(_lands) {
             row.classList.add("row", "mb-3")
             // Add 3 cols to each row
             for (let j = 0; j < 3; j++) {
-                const _landUI = createLandSquare(_lands[currentLandIndex])
+                const _landUI = createLandSquare(lands[currentLandIndex])
                 row.appendChild(_landUI)
                 currentLandIndex++
             }
@@ -210,13 +203,16 @@ function createLandSquare(_land) {
         fruitImage.src = getFruitById(_land.fruitId).imageSrc
 
         // Add harvest amount
-        const harvestAmount = document.createElement("span")
-        harvestAmount.classList.add("harvest_amount", "m-1", "p-1", "d-block")
-        harvestAmount.textContent = _land.harvestAmount
+        const harvestableAmount = document.createElement("span")
+        harvestableAmount.classList.add("harvest_amount", "m-1", "p-1", "d-block")
+        harvestableAmount.textContent = _land.harvestableAmount
 
         // Add to detail container
         landDetailContainer.appendChild(fruitImage)
-        landDetailContainer.appendChild(harvestAmount)
+        landDetailContainer.appendChild(harvestableAmount)
+
+        // Add event handler
+        landContainer.addEventListener("click", (e) => harvest(_land, landContainer))
     } else {
         landImage.src = "./assets/images/lands/soil_big.png"
         // Create plant button
@@ -229,15 +225,83 @@ function createLandSquare(_land) {
 
         // Add to detail container
         landDetailContainer.appendChild(plantButton)
+
+        // Add event handler
+        landContainer.addEventListener("click", (e) => plant(_land, landContainer))
     }
 
     landContainer.appendChild(landImage)
     landContainer.appendChild(landDetailContainer)
+
+
     return landContainer
 }
 
 /**
- *  Render Fruit Image
+ *  Switch to Soil UI
+ */
+function changeToSoilUI(element) {
+    const [landImage, landDetail] = element.childNodes
+    // Change to soil background
+    landImage.src = "./assets/images/lands/soil_big.png"
+    // Create plant button
+    const plantButton = document.createElement("button")
+    plantButton.classList.add("btn", "btn-primary")
+    plantButton.innerHTML = "+"
+    plantButton.setAttribute("type", "button")
+    plantButton.setAttribute("data-target", "#seedModal")
+    plantButton.setAttribute("data-toggle", "modal")
+
+    // Add to detail container
+    landDetail.innerHTML = ""
+    landDetail.appendChild(plantButton)
+
+    // Add event handler
+    element.addEventListener("click", (e) => plant(_land, element))
+}
+
+/**
+ *  Switch to Land UI
+ */
+function changeToLandUI(element) {
+    const [landImage, landDetail] = element.childNodes
+    // Change to soil background
+    landImage.src = "./assets/images/lands/soil_big.png"
+    // Create plant button
+    const plantButton = document.createElement("button")
+    plantButton.classList.add("btn", "btn-primary")
+    plantButton.innerHTML = "+"
+    plantButton.setAttribute("type", "button")
+    plantButton.setAttribute("data-target", "#seedModal")
+    plantButton.setAttribute("data-toggle", "modal")
+
+    // Add to detail container
+    landDetail.innerHTML = ""
+    landDetail.appendChild(plantButton)
+
+    // Add event handler
+    element.addEventListener("click", (e) => plant(_land, element))
+}
+
+/**
+ *  
+ */
+function harvest(_land, landContainer) {
+    changeToSoilUI(landContainer)
+    // Re-render land with new status
+    const fruit = fruits.find(fruit => fruit.id == _land.fruitId)
+    _land.harvest(fruit)
+}
+
+function plant(_land, landContainer) {
+    changeToLandUI(landContainer)
+    // Re-render land with new status
+    // const fruit = fruits.find(fruit => fruit.id == _land.fruitId)
+    // _land.harvest(fruit)
+}
+
+/**
+ *  Get Fruit By Id
  */
 function getFruitById(_fruitId) {
     const fruit = fruits.find((_fruit) => _fruit.id == _fruitId)
