@@ -24,6 +24,8 @@ class Land {
             this.fruitId = fruitId
             this.harvestableAmount = 0
         }
+
+        return this
     }
 
     grow(amountToGrow) {
