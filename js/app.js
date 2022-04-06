@@ -18,12 +18,12 @@ function setFruits() {
 function setLands() {
     // Create land objects
     // for (let i=0; i < lands.length; i++){
-        mockupLands.forEach((mockupLand) => {
+    mockupLands.forEach((mockupLand) => {
         const { id, status, fruitId, harvestAmount } = mockupLand
         const newLand = new Land(id, status, fruitId, harvestAmount)
         lands.push(newLand)
     })
-    
+
     // Render  UI
     renderLands(mockupLands)
 }
@@ -34,8 +34,8 @@ function setLands() {
 function renderLands(_lands) {
     const landGroups = document.getElementsByClassName("land-group")
     let currentLandIndex = 0
-    
-    for(let k= 0; k < landGroups.length; k++) {
+
+    for (let k = 0; k < landGroups.length; k++) {
         // Add 3 rows
         for (let i = 0; i < 3; i++) {
             const row = document.createElement("div")
@@ -81,7 +81,7 @@ function createLandSquare(_land) {
         // Add fruit image
         const fruitImage = document.createElement("img")
         fruitImage.src = getFruitById(_land.fruitId).imageSrc
-        
+
         // Add harvest amount
         const harvestAmount = document.createElement("span")
         harvestAmount.classList.add("harvest_amount", "m-1", "p-1", "d-block")
@@ -98,7 +98,7 @@ function createLandSquare(_land) {
         plantButton.innerHTML = "+"
         plantButton.setAttribute("type", "button")
         plantButton.setAttribute("data-target", "#seedModal")
-        plantButton.setAttribute("data-target", "#seedModal")
+        plantButton.setAttribute("data-toggle", "modal")
 
         // Add to detail container
         landDetailContainer.appendChild(plantButton)
