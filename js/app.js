@@ -3,8 +3,21 @@
 const fruits = []
 const lands = []
 
+// Initialize data for the first attempt
+setFruits()
+setLands()
+
+/**
+ * 
+ */
+
+
+
+/**
+ *  RENDER
+ */
+
 function setFruits() {
-    let fruitColumns = []
 
     // Create Fruit objects
     mockupFruits.forEach((mockupFruit) => {
@@ -13,20 +26,21 @@ function setFruits() {
         fruits.push(newFruit)
     })
 
-    for (let i = 0; i < fruits.length; i++) {
-        const fruitCol = createFruitUI(fruits[i])
-        fruitColumns.push(fruitCol)
-    }
-
-    renderFruitsInInventory(fruitColumns)
+    renderFruitsInInventory()
+    renderFruitsInSeedModal()
 }
-
 
 /**
  * 
  *  Render List of Fruits in Inventory
  */
-function renderFruitsInInventory(_fruitColumns) {
+function renderFruitsInInventory() {
+    const fruitColumns = []
+    for (let i = 0; i < fruits.length; i++) {
+        const fruitCol = createFruitInventoryUI(fruits[i])
+        fruitColumns.push(fruitCol)
+    }
+
     // Render Fruits for Inventory Modal
     const inventoryContainer = document.getElementById("inventory-container")
 
@@ -37,8 +51,7 @@ function renderFruitsInInventory(_fruitColumns) {
     row2.classList.add("row")
 
     // Add 5 column to each row
-    _fruitColumns.forEach((col, index) => {
-        console.log(index)
+    fruitColumns.forEach((col, index) => {
         if (index < 5) {
             row1.appendChild(col)
         } else {
@@ -48,14 +61,48 @@ function renderFruitsInInventory(_fruitColumns) {
     
     inventoryContainer.appendChild(row1)
     inventoryContainer.appendChild(row2)
+}
 
+/**
+ * 
+ *  Render List of Fruits in Inventory
+ */
+function renderFruitsInSeedModal() {
+    const fruitColumns = []
+    for (let i = 0; i < fruits.length; i++) {
+        const fruitCol = createFruitInventoryUI(fruits[i])
+        fruitCol.classList.remove("inventory_item")
+        fruitCol.classList.add("fruit")
+        fruitColumns.push(fruitCol)
+    }
+
+    // Render Fruits for Inventory Modal
+    const seedContainer = document.getElementById("seed-container")
+
+    // Create 2 rows
+    const row1 = document.createElement("row")
+    row1.classList.add("row")
+    const row2 = document.createElement("row")
+    row2.classList.add("row")
+
+    // Add 5 column to each row
+    fruitColumns.forEach((col, index) => {
+        if (index < 5) {
+            row1.appendChild(col)
+        } else {
+            row2.appendChild(col)
+        }
+    })
+    
+    seedContainer.appendChild(row1)
+    seedContainer.appendChild(row2)
 }
 
 /**
  * 
  *  Create A Fruit UI
  */
-function createFruitUI(_fruit) {
+function createFruitInventoryUI(_fruit) {
     // Container
     const col = document.createElement("div")
     col.classList.add(
@@ -197,6 +244,3 @@ function getFruitById(_fruitId) {
     return fruit
 }
 
-// Initialize data for the first attempt
-setFruits()
-setLands()
