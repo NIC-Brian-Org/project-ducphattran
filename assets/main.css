@@ -68,3 +68,15 @@ h1 {
 .fruit:hover, .fruit.selected span {
     color: white;
 }
+
+.sell {
+    background-color: #b9c1cd;
+}
+.sell.available {
+    background-color: #70D6FF;
+}
+
+#total-value {
+    font-size: 20px;
+    font-weight: bold;
+}
