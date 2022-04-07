@@ -6,7 +6,6 @@
 // Set data for the first attempt
 setFruits()
 setLands()
-
 /**
  *  RENDER
  */
@@ -20,7 +19,6 @@ function setFruits() {
     })
 }
 
-
 /**
  *   Initialize lands
  * */
@@ -32,3 +30,5 @@ function setLands() {
         lands.push(newLand)
     })
 }
+
+

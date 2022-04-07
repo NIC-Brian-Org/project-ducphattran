@@ -1,4 +1,4 @@
-"use strict";
+"use strict"
 
 class Land {
     constructor(_landId, _status, _fruitId, _harvestableAmount) {
@@ -8,31 +8,30 @@ class Land {
         this.harvestableAmount = _harvestableAmount
     }
 
-    harvest (fruit) {
-        // Ensure the land is harvestable
-        if (this.status = 1) {
-            fruit.quantity = parseInt(fruit.quantity) + parseInt(this.harvestableAmount)
+    harvest() {
+        // Ensure the land is planted
+        if (this.status === 1) {
             this.harvestableAmount = 0
             this.status = 0
             this.fruitId = null
         }
     }
 
-    plant (fruitId) {
+    plant(_fruitId) {
         // Ensure the land is harvested
-        if (this.status = 0) {
-            this.fruitId = fruitId
+        if (this.status === 0) {
+            this.fruitId = _fruitId
             this.harvestableAmount = 0
+            this.status = 1
         }
-
         return this
     }
 
     grow(amountToGrow) {
-        // Ensure the land is not harvestable
-        if (this.status = 0 && this.fruitId) {
-            this.harvestableAmount = parseInt(amountToGrow) + parseInt(this.harvestableAmount)
+        // Ensure the land is planted
+        if (this.status === 1 && this.fruitId) {
+            this.harvestableAmount =
+                parseInt(amountToGrow) + parseInt(this.harvestableAmount)
         }
     }
-
 }

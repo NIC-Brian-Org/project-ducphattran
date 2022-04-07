@@ -3,6 +3,8 @@
 // Render UI
 renderFruitModal()
 renderLands()
+// Start growing
+startGrowingAllLand(GROW_INCREMENT, SECONDS_TO_GROW)
 
 // Switch FruitModalType to "inventory"
 document.getElementById("inventory").addEventListener("click", () => {
@@ -12,8 +14,7 @@ document.getElementById("inventory").addEventListener("click", () => {
 
 // Plant event handler
 document.getElementById("plant-seed-button").addEventListener("click", () => {
-    const selectedFruitBox = document.getElementById(`fruit-${selectedLand.id}`)
-    plant(selectedLand, selectedFruitBox)
+    plant()
 })
 
 /**
@@ -29,6 +30,8 @@ function renderFruitModal() {
 
     // Render Fruits for Fruit Modal
     const fruitContainer = document.getElementById("fruit-container")
+    // Reset if updated
+    fruitContainer.innerHTML = ""
 
     // Create 2 rows
     const row1 = document.createElement("row")
@@ -52,7 +55,7 @@ function renderFruitModal() {
 /**
  *  Create a row containing 3 lands
  */
- function renderLands() {
+function renderLands() {
     const landGroups = document.getElementsByClassName("land-group")
     let currentLandIndex = 0
 

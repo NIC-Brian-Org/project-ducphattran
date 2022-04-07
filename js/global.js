@@ -9,6 +9,12 @@ let fruitModalType = "inventory"
 let selectedFruit = null
 // Selected land box
 let selectedLand = null
+// Interval for automatic growth
+let growInterval = null
+// Seconds to increase harvestable amount of lands
+const SECONDS_TO_GROW = 2000
+// Amount to increase harvestable amount
+const GROW_INCREMENT = 1
 
 /**
  *  Get Fruit By Id
@@ -16,6 +22,14 @@ let selectedLand = null
 function getFruitById(_fruitId) {
     const fruit = fruits.find((_fruit) => _fruit.id == _fruitId)
     return fruit
+}
+
+/**
+ *  Get Land By Id
+ */
+function getLandById(_landId) {
+    const land = lands.find((_land) => _land.id == _landId)
+    return land
 }
 
 /**
@@ -62,14 +76,6 @@ function removeClassToAllElements(_baseClassName, _className) {
     for (let i = 0; i < elements.length; i++) {
         elements[i].classList.remove(_className)
     }
-}
-
-/**
- *  Display error in FruitModal
- */
-function displayFruitModalError(errorMsg = null) {
-    const errorMsgElement = document.getElementById("seed-modal-error")
-    errorMsgElement.textContent = errorMsg || "Please select a seed!"
 }
 
 /**
@@ -153,6 +159,8 @@ function createLandBox(_land) {
     // [0] -> "soil_big.png"
     // [1] -> "land_big.png"
     if (_land.status == 1) {
+        // Add class "planted"
+        landContainer.classList.add("planted")
         landImage.src = "./assets/images/lands/land_big.png"
         // Add fruit image
         const fruitImage = document.createElement("img")
@@ -175,14 +183,23 @@ function createLandBox(_land) {
         // Add event handler
         landContainer.addEventListener("click", () => {
             selectedLand = _land
-            if (selectedLand.harvestableAmount > 0) {
+
+            if (selectedLand.status === 1 && selectedLand.harvestableAmount > 0) {
                 harvest(_land, landContainer)
             }
         })
     } else {
         landImage.src = "./assets/images/lands/soil_big.png"
         // Create add plant button
-    const addPlantButton = createAddPlantButton(() => prepareFruitModal(_land))
+        const addPlantButton = createAddPlantButton()
+
+        // Add event handler for soil box
+        landContainer.setAttribute("data-toggle", "modal")
+        landContainer.setAttribute("data-target", "#fruitModal")
+        landContainer.addEventListener("click", () => {
+            selectedLand = _land
+            prepareFruitModal()
+        })
 
         // Add to detail container
         landDetailContainer.appendChild(addPlantButton)
@@ -200,10 +217,25 @@ function createLandBox(_land) {
 function harvest(_land, landContainer) {
     // Re-render land with new status
     const fruit = getFruitById(_land.fruitId)
-    if (fruit && fruit.quantity > 0) {
-        changeToSoilUI(landContainer)
+    if (fruit) {
+        // Increase quantity 
+        fruit.quantity += parseInt(_land.harvestableAmount) 
+        // Update fruits array
+        fruits = fruits.map(fr => {
+            if (fr.id === fruit.id) {
+                fr.quantity = fruit.quantity
+            }
+
+            return fr
+        })
+        // Re-render fruits
+        renderFruitModal()
+        // Update land
         _land.harvest(fruit)
-        displayFruitModalError()
+        // Update UI
+        changeToSoilUI(landContainer)
+        // Reset growth
+        startGrowingAllLand(GROW_INCREMENT, SECONDS_TO_GROW)
     }
 }
 
@@ -217,13 +249,14 @@ function plant() {
     } else {
         toggleSeedModalError("off")
         // Plant
-        const newLand = selectedLand.plant(selectedFruit.id)
-        // Update to array
+        selectedLand.plant(selectedFruit.id)
+        
+        // Update lands array
         lands = lands.map((land) => {
-            if (land.id == newLand.id) {
-                land.harvestAmount = 0
-                land.fruitId = newLand.id
-                land.status = newLand.status
+            if (land.id == selectedLand.id) {
+                land.harvestableAmount = 0
+                land.fruitId = selectedLand.fruitId
+                land.status = selectedLand.status
             }
 
             return land
@@ -232,6 +265,8 @@ function plant() {
         $("#fruitModal").modal("hide")
         // Switch to Green land
         changeToLandUI(document.getElementById(`land-${selectedLand.id}`))
+        // Reset growth
+        startGrowingAllLand(GROW_INCREMENT, SECONDS_TO_GROW)
     }
 }
 
@@ -239,6 +274,7 @@ function plant() {
  *  Switch to Land UI
  */
 function changeToLandUI(element) {
+    element.classList.add("planted")
     const [landImage, landDetail] = element.childNodes
     // Change to soil background
     landImage.src = "./assets/images/lands/land_big.png"
@@ -258,25 +294,36 @@ function changeToLandUI(element) {
     landDetail.appendChild(harvestableAmount)
 
     // Add event handler
-    // element.addEventListener("click", () => harvest(selectedLand, element))
+    element.addEventListener("click", () => {
+        element.removeAttribute("data-toggle")
+        element.removeAttribute("data-target")
+        if (selectedLand.status === 1 && selectedLand.harvestableAmount > 0) {
+            harvest(selectedLand, element)
+        }
+    })
 }
 
 /**
  *  Switch to Soil UI
  */
 function changeToSoilUI(element) {
+    element.classList.remove("planted")
     const [landImage, landDetail] = element.childNodes
     // Change to soil background
     landImage.src = "./assets/images/lands/soil_big.png"
     // Create plant button
-    const addPlantButton = createAddPlantButton(() => prepareFruitModal(selectedLand))
+    const addPlantButton = createAddPlantButton()
+
+    // Add event handler for soil box
+    element.addEventListener("click", () => {
+        element.setAttribute("data-toggle", "modal")
+        element.setAttribute("data-target", "#fruitModal")
+        prepareFruitModal()
+    })
 
     // Add to detail container
     landDetail.innerHTML = ""
     landDetail.appendChild(addPlantButton)
-
-    // Add event handler
-    // element.addEventListener("click", () => plant(selectedLand, element))
 }
 
 // Clear error on seed modal
@@ -294,23 +341,18 @@ function toggleSeedModalError(action = "off") {
  *
  *  Create an add plant button
  */
-function createAddPlantButton(eventHandler) {
+function createAddPlantButton() {
     // Create add plant button
     const addPlantButton = document.createElement("button")
     addPlantButton.classList.add("btn", "btn-primary")
     addPlantButton.innerHTML = "+"
     addPlantButton.setAttribute("type", "button")
-    addPlantButton.setAttribute("data-toggle", "modal")
-    addPlantButton.setAttribute("data-target", "#fruitModal")
-
-    addPlantButton.addEventListener("click", eventHandler)
 
     return addPlantButton
 }
 
 //  Prepare before display FruitModal
-function prepareFruitModal(_land) {
-    selectedLand = _land
+function prepareFruitModal() {
     // Change FruitModal UI
     fruitModalType = "plant"
     handleFruitModalType()
@@ -320,13 +362,48 @@ function prepareFruitModal(_land) {
  *  Toggle style for selecting plant
  */
 function toggleSelectSeed(element) {
+    // Check if the box is toggled
+    if (element.classList.contains("selected")) {
+        selectedFruit = null
+    }
     // Change background color
     element.classList.toggle("selected")
     // Remove "selected" class from others
     const fruitElements = document.getElementsByClassName("fruit")
     for (let i = 0; i < fruitElements.length; i++) {
+        // Remove class "selected" from the others
         if (fruitElements[i].id != element.id) {
             fruitElements[i].classList.remove("selected")
         }
     }
+}
+
+/**
+ *  Automatically grow
+ */
+function startGrowingAllLand(increment, delayTime) {
+    // Reset interval
+    clearInterval(growInterval)
+    // Create new interval
+    growInterval = setInterval(() => {
+        // Update lands
+        lands.forEach((land) => {
+            // Ensure the land is planted
+            if (land.status === 1) {
+                land.grow(increment)
+                const landElement = document.getElementById(`land-${land.id}`)
+                updateHarvestableAmountUI(landElement, land.harvestableAmount)
+            }
+        })
+    }, delayTime)
+}
+
+/**
+ *  Update UI of harvestable amount
+ */
+function updateHarvestableAmountUI(_landElement, _newAmount) {
+    let harvestableAmount = document.querySelector(
+        `#${_landElement.id} span.harvest_amount`
+    )
+    harvestableAmount.textContent = _newAmount
 }
