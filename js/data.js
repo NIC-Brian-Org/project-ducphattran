@@ -34,13 +34,13 @@ const mockupLands = [
 
 const mockupFruits = [
     {id: "1", name:  "Apple", price: "6", quantity: 28, imageSrc: "./assets/images/fruits-hl/Apple_HL.png"},
-    {id: "2", name:  "Cherry", price: "6", quantity: 32, imageSrc: "./assets/images/fruits-hl/Cherry_HL.png"},
-    {id: "3", name:  "Coconut", price: "6", quantity: 13, imageSrc: "./assets/images/fruits-hl/Coconut_HL.png"},
-    {id: "4", name:  "Green Grape", price: "6", quantity: 40, imageSrc: "./assets/images/fruits-hl/Green_grape_HL.png"},
-    {id: "5", name:  "Lemon", price: "6", quantity: 55, imageSrc: "./assets/images/fruits-hl/Lemon_HL.png"},
-    {id: "6", name:  "Mango", price: "6", quantity: 13, imageSrc: "./assets/images/fruits-hl/Mango_HL.png"},
-    {id: "7", name:  "Orange", price: "6", quantity: 24, imageSrc: "./assets/images/fruits-hl/Orange_HL.png"},
-    {id: "8", name:  "Purple Grape", price: "6", quantity: 36, imageSrc: "./assets/images/fruits-hl/Purple_grape_HL.png"},
-    {id: "9", name:  "Red Grape", price: "6", quantity: 66, imageSrc: "./assets/images/fruits-hl/Red_grape_HL.png"},
-    {id: "10", name:  "Strawberry", price: "6", quantity: 17, imageSrc: "./assets/images/fruits-hl/Strawberry_HL.png"},
+    {id: "2", name:  "Cherry", price: "4", quantity: 32, imageSrc: "./assets/images/fruits-hl/Cherry_HL.png"},
+    {id: "3", name:  "Coconut", price: "5", quantity: 13, imageSrc: "./assets/images/fruits-hl/Coconut_HL.png"},
+    {id: "4", name:  "Green Grape", price: "3", quantity: 40, imageSrc: "./assets/images/fruits-hl/Green_grape_HL.png"},
+    {id: "5", name:  "Lemon", price: "12", quantity: 55, imageSrc: "./assets/images/fruits-hl/Lemon_HL.png"},
+    {id: "6", name:  "Mango", price: "8", quantity: 13, imageSrc: "./assets/images/fruits-hl/Mango_HL.png"},
+    {id: "7", name:  "Orange", price: "15", quantity: 24, imageSrc: "./assets/images/fruits-hl/Orange_HL.png"},
+    {id: "8", name:  "Purple Grape", price: "18", quantity: 36, imageSrc: "./assets/images/fruits-hl/Purple_grape_HL.png"},
+    {id: "9", name:  "Red Grape", price: "8", quantity: 66, imageSrc: "./assets/images/fruits-hl/Red_grape_HL.png"},
+    {id: "10", name:  "Strawberry", price: "9", quantity: 17, imageSrc: "./assets/images/fruits-hl/Strawberry_HL.png"},
 ]

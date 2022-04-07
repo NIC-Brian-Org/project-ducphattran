@@ -131,6 +131,90 @@ function createFruitBox(_fruit) {
 }
 
 /**
+ *
+ *  Create A Fruit Rectangle
+ */
+function createFruitLine(_fruit) {
+    // Container
+    const row = document.createElement("row")
+    row.classList.add(
+        "row",
+        "m-1",
+        "justify-content-center",
+        "align-items-center",
+        "rounded",
+        "sell"
+    )
+    row.id = `market-fruit-${_fruit.id}`
+
+    // Image and Image
+    const nameAndImage = document.createElement("div")
+    nameAndImage.classList = "col-md  m-2 p-1"
+    // Image
+    const fruitImage = document.createElement("img")
+    fruitImage.classList.add("m-1", "p-1")
+    fruitImage.src = _fruit.imageSrc
+    // Name
+    const fruitName = document.createElement("span")
+    fruitName.classList.add("p-1")
+    fruitName.textContent = _fruit.name
+
+    nameAndImage.appendChild(fruitImage)
+    nameAndImage.appendChild(fruitName)
+
+    // Price
+    const priceWrapper = document.createElement("div")
+    priceWrapper.className = "col-md text-center"
+    const priceContainer = document.createElement("p")
+    priceContainer.className = "text-white  bg-info p-2 rounded d-inline"
+    createPriceInfo(_fruit.price, priceContainer)
+
+    priceWrapper.appendChild(priceContainer)
+
+    //  Input group
+    const inputContainer = document.createElement("div")
+    inputContainer.className = "col-md d-flex flex-row"
+    // Input
+    const inputElement = document.createElement("input")
+    inputElement.className = "text-center"
+    inputElement.type = "number"
+    inputElement.min  = 0 
+    inputElement.value  = 0 
+    // Available amount to sell
+    const availableAmountElement = document.createElement("p")
+    availableAmountElement.className = "p-1 m-1"
+    availableAmountElement.innerHTML= `/<span class="mx-1">(${_fruit.quantity})</span>`
+    // Sell button
+    const sellButtonElement = document.createElement("button")
+    sellButtonElement.className = "btn btn-warning"
+    sellButtonElement.type = "button"
+    sellButtonElement.textContent = "Sell"
+
+    inputContainer.appendChild(inputElement)
+    inputContainer.appendChild(availableAmountElement)
+    inputContainer.appendChild(sellButtonElement)
+    
+
+    row.appendChild(nameAndImage)
+    row.appendChild(priceWrapper)
+    row.appendChild(inputContainer)
+
+    return row
+}
+/* <span class="mr-2">6</span><i
+                                        class="fa-solid fa-sack-dollar"></i></p>
+                                         */
+function createPriceInfo(_price, htmlContainer) {
+    const price = document.createElement("span")
+    price.className="mx-2"
+    price.textContent = _price
+    const dollarIcon = document.createElement("i")
+    dollarIcon.className = "fa-solid fa-sack-dollar"
+    htmlContainer.appendChild(price)
+    htmlContainer.appendChild(dollarIcon)
+}
+
+/**
  *  Create a land box
  */
 function createLandBox(_land) {
@@ -184,7 +268,10 @@ function createLandBox(_land) {
         landContainer.addEventListener("click", () => {
             selectedLand = _land
 
-            if (selectedLand.status === 1 && selectedLand.harvestableAmount > 0) {
+            if (
+                selectedLand.status === 1 &&
+                selectedLand.harvestableAmount > 0
+            ) {
                 harvest(_land, landContainer)
             }
         })
@@ -218,10 +305,10 @@ function harvest(_land, landContainer) {
     // Re-render land with new status
     const fruit = getFruitById(_land.fruitId)
     if (fruit) {
-        // Increase quantity 
-        fruit.quantity += parseInt(_land.harvestableAmount) 
+        // Increase quantity
+        fruit.quantity += parseInt(_land.harvestableAmount)
         // Update fruits array
-        fruits = fruits.map(fr => {
+        fruits = fruits.map((fr) => {
             if (fr.id === fruit.id) {
                 fr.quantity = fruit.quantity
             }
@@ -250,7 +337,7 @@ function plant() {
         toggleSeedModalError("off")
         // Plant
         selectedLand.plant(selectedFruit.id)
-        
+
         // Update lands array
         lands = lands.map((land) => {
             if (land.id == selectedLand.id) {

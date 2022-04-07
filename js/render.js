@@ -2,6 +2,7 @@
 
 // Render UI
 renderFruitModal()
+// renderMarketModal()
 renderLands()
 // Start growing
 startGrowingAllLand(GROW_INCREMENT, SECONDS_TO_GROW)
@@ -50,6 +51,28 @@ function renderFruitModal() {
 
     fruitContainer.appendChild(row1)
     fruitContainer.appendChild(row2)
+}
+
+/**
+ *
+ *  Render Market Modal
+ */
+function renderMarketModal() {
+    const fruitLines = []
+    for (let i = 0; i < fruits.length; i++) {
+        const fruitLine = createFruitLine(fruits[i])
+        fruitLines.push(fruitLine)
+    }
+
+    // Render Fruits for Fruit Modal
+    const marketContainer = document.getElementById("market-container")
+    // Reset if updated
+    marketContainer.innerHTML = ""
+
+    // Add rows 
+    fruitLines.forEach((row) => {
+        marketContainer.appendChild(row)
+    })
 }
 
 /**
