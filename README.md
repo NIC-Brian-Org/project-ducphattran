@@ -64,7 +64,7 @@ render.js | Contain rendering functions after the data is set
 <br>
 
 ## Code Description
-The game does not show any land or fruit by default. Fruits and Lands are rendered by Javascript code. In particular, I define each square of land as a "land box." Each of them has two states: plant and unplanted. If the state is planted, it will display the fruit image and the harvestable amount. Otherwise, it will display a plus button that opens a new modal to select and seed to plant. When the land is planted and the amount is greater than 0, the user can harvest it by clicking on it. It will change to land with a plus button. In addition, the planted land starts growing by 1 every 2 seconds. 
+The game does not show any land or fruit by default. Fruits and Lands are rendered by Javascript code. In particular, I define each square of land as a "land box." Each of them has two states: plant and unplanted. If the state is planted, it will display the fruit image and the harvestable amount. Otherwise, it will display a plus button that opens a new modal to select a seed to plant. When the land is planted and the amount is greater than 0, the user can harvest it by clicking on it. It will change to land with a plus button. In addition, the planted land starts growing by 1 every 2 seconds. 
 
 The Inventory has the same modal element as the plus button. However, based on what the user clicks, it will display differently. In addition, the modal elements which contain fruits will re-render if any harvest or sale is made to update the quantity. 
 
