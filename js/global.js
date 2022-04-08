@@ -12,25 +12,9 @@ let selectedLand = null
 // Interval for automatic growth
 let growInterval = null
 // Seconds to increase harvestable amount of lands
-const SECONDS_TO_GROW = 2000
+const SECONDS_TO_GROW = 2
 // Amount to increase harvestable amount
 const GROW_INCREMENT = 1
-
-/**
- *  Get Fruit By Id
- */
-function getFruitById(_fruitId) {
-    const fruit = fruits.find((_fruit) => _fruit.id == _fruitId)
-    return fruit
-}
-
-/**
- *  Get Land By Id
- */
-function getLandById(_landId) {
-    const land = lands.find((_land) => _land.id == _landId)
-    return land
-}
 
 /**
  *  Handle different FruitModalType
@@ -322,7 +306,7 @@ function harvest(_land, landContainer) {
         // Update UI
         changeToSoilUI(landContainer)
         // Reset growth
-        startGrowingAllLand(GROW_INCREMENT, SECONDS_TO_GROW)
+        startGrowingAllLand(GROW_INCREMENT, SECONDS_TO_GROW * 1000)
     }
 }
 
@@ -353,7 +337,7 @@ function plant() {
         // Switch to Green land
         changeToLandUI(document.getElementById(`land-${selectedLand.id}`))
         // Reset growth
-        startGrowingAllLand(GROW_INCREMENT, SECONDS_TO_GROW)
+        startGrowingAllLand(GROW_INCREMENT, SECONDS_TO_GROW * 1000)
     }
 }
 
