@@ -3,18 +3,19 @@
 /**
  *  INITIALIZE
  */
-// Set data for the first attempt
-setFruits()
-setLands()
-/**
- *  RENDER
- */
 
-function setFruits() {
+// Set data for the first attempt
+setFruits(mockupData.fruits)
+setLands(mockupData.lands)
+
+
+function setFruits(_fruits) {
     // Create Fruit objects
-    mockupFruits.forEach((mockupFruit) => {
-        const { id, name, price, quantity, imageSrc } = mockupFruit
+    _fruits.forEach((fruit) => {
+        const { id, name, price, quantity, imageSrc } = fruit
         const newFruit = new Fruit(id, name, price, quantity, imageSrc)
+        
+        // Update to global variable
         fruits.push(newFruit)
     })
 }
@@ -22,11 +23,13 @@ function setFruits() {
 /**
  *   Initialize lands
  * */
-function setLands() {
+function setLands(_lands) {
     // Create land objects
-    mockupLands.forEach((mockupLand) => {
-        const { id, status, fruitId, harvestAmount } = mockupLand
+    _lands.forEach((land) => {
+        const { id, status, fruitId, harvestAmount } = land
         const newLand = new Land(id, status, fruitId, harvestAmount)
+
+        // Update to global variable
         lands.push(newLand)
     })
 }
