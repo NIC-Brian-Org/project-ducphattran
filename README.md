@@ -44,18 +44,18 @@ It has 2 functions:
 
 - increaseQuantity(_increment)
 
-This function increase the current ```quantity``` with a given value (```_increment```)
+This function increases the current ```quantity``` with a given value (```_increment```)
 
 - decreaseQuantity(_decrement)
 
-This function decrease the current ```quantity``` with a given value (```_decrement```)
+This function decreases the current ```quantity``` with a given value (```_decrement```)
 
 ## Files
 Filename | Description
 --- | --- |
-app,js | Initialize data
-constant,js | Contain global variables
-data,js | Contain mockup data (used for first attemp)
+app.js | Initialize data
+constant.js | Contain global variables
+data.js | Contain mock-up data (used for first attempt)
 Fruit.js | Fruit Class
 Land.js | Land Class
 helper.js | Contain all the generating HTML elements and the logic functions
