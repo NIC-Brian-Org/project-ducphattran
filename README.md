@@ -70,6 +70,8 @@ The game does not show any land or fruit by default. Fruits and Lands are render
 
 The Inventory has the same modal element as the plus button. However, based on what the user clicks, it will display differently. In addition, the modal elements which contain fruits will re-render if any harvest or sale is made to update the quantity. 
 
+In addition, the game stores and gets data from the local storage. The mock-up data (data.js) will use as the initial data for the first attempt.
+
 <br>
 
 ## References (Game assets)
