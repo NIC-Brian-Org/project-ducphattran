@@ -1,4 +1,4 @@
-"use strict";
+"use strict"
 /**
  *  This file is a class representing fruits
  */
@@ -12,11 +12,11 @@ class Fruit {
         this.imageSrc = _imageSrc
     }
 
-    sell() {}
+    increaseQuantity(_increment) {
+        this.quantity += _increment
+    }
 
-    increaseQuantity() {}
-
-    getImageSrc (_fruitId) {
-
+    decreaseQuantity(_decrement) {
+        this.quantity -= _decrement
     }
 }

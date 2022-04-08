@@ -394,7 +394,7 @@ function harvestListener(_land, landContainer) {
     const fruit = getFruitById(_land.fruitId)
     if (fruit) {
         // Increase quantity
-        fruit.quantity += parseInt(_land.harvestableAmount)
+        fruit.increaseQuantity(parseInt(_land.harvestableAmount))
         // Update fruits array
         fruits = fruits.map((fr) => {
             if (fr.id === fruit.id) {
@@ -622,7 +622,7 @@ function sellFruit(_fruit) {
         // Update fruit's quantity
         fruits.map((fruit) => {
             if (fruit.id === _fruit.id) {
-                fruit.quantity -= sellAmount
+                fruit.decreaseQuantity(sellAmount)
             }
 
             return fruit
