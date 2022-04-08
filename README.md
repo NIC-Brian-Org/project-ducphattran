@@ -16,7 +16,7 @@ This game is made with plain Javascript. In addition, it uses other libraries to
 ## Classes
 The game contains two main objects: **Fruit** and **Land**. 
 ### Land (id, status, fruitId, harvestableAmount)
-Land is used to plant and  harvest the fruit, it contains two status:
+Land is used to plant and  harvest the fruit, it contains two statuses:
 
 - 0: Not planted
 - 1: Planted
