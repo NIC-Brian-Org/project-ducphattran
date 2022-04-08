@@ -12,3 +12,16 @@ const fruitModalTypes = Object.freeze({
 const SECONDS_TO_GROW = 2
 // Amount to increase harvestable amount
 const GROW_INCREMENT = 1
+
+// List of fruits
+let fruits = []
+// List of lands
+let lands = []
+// Set default fruit modal for inventory
+let currentFruitModalType = fruitModalTypes.INVENTORY
+// Selected fruit box
+let selectedFruit = null
+// Selected land box
+let selectedLand = null
+// Interval for automatic growth
+let growInterval = null

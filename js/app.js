@@ -38,4 +38,22 @@ function setLands(_lands) {
     })
 }
 
-
+/**
+ *  Automatically grow
+ */
+ function startGrowingAllLand(increment, delayTime) {
+    // Reset interval
+    clearInterval(growInterval)
+    // Create new interval
+    growInterval = setInterval(() => {
+        // Update lands
+        lands.forEach((land) => {
+            // Ensure the land is planted
+            if (land.status === 1) {
+                land.grow(increment)
+                const landElement = document.getElementById(`land-${land.id}`)
+                updateHarvestableAmount(landElement, land.harvestableAmount)
+            }
+        })
+    }, delayTime)
+}

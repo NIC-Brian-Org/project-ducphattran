@@ -2,7 +2,7 @@
 
 // Render UI
 renderFruitModal()
-// renderMarketModal()
+renderMarketModal()
 renderLands()
 // Start growing
 startGrowingAllLand(GROW_INCREMENT, SECONDS_TO_GROW * 1000)
@@ -15,7 +15,7 @@ document.getElementById("inventory").addEventListener("click", () => {
 // Open add plant modal
 document.getElementById("plant-seed-button").addEventListener("click", () => {
     prepareFruitModal(fruitModalTypes.PLANT)
-    plant()
+    plantListener() // Trigger "Plant" button event
 })
 
 /**
@@ -69,7 +69,7 @@ function renderMarketModal() {
     // Reset if updated
     marketContainer.innerHTML = ""
 
-    // Add rows 
+    // Add rows to the modal
     fruitLines.forEach((row) => {
         marketContainer.appendChild(row)
     })
@@ -87,7 +87,7 @@ function renderLands() {
         for (let i = 0; i < 3; i++) {
             const row = document.createElement("div")
             row.classList.add("row", "mb-3")
-            // Add 3 cols to each row
+            // Add 3 columns to each row
             for (let j = 0; j < 3; j++) {
                 const _landUI = createLandBox(lands[currentLandIndex])
                 row.appendChild(_landUI)
