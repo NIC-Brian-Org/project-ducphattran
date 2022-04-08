@@ -112,12 +112,12 @@ function createFruitLine(_fruit) {
     const inputElement = document.createElement("input")
     inputElement.className = "text-center"
     inputElement.type = "number"
-    inputElement.min  = 0 
-    inputElement.value  = 0 
+    inputElement.min = 0
+    inputElement.value = 0
     // Available amount to sell
     const availableAmountElement = document.createElement("p")
     availableAmountElement.className = "p-1 m-1"
-    availableAmountElement.innerHTML= `/<span class="mx-1">(${_fruit.quantity})</span>`
+    availableAmountElement.innerHTML = `/<span class="mx-1">(${_fruit.quantity})</span>`
     // Sell button
     const sellButtonElement = document.createElement("button")
     sellButtonElement.className = "btn btn-warning"
@@ -127,7 +127,6 @@ function createFruitLine(_fruit) {
     inputContainer.appendChild(inputElement)
     inputContainer.appendChild(availableAmountElement)
     inputContainer.appendChild(sellButtonElement)
-    
 
     row.appendChild(nameAndImage)
     row.appendChild(priceWrapper)
@@ -138,7 +137,7 @@ function createFruitLine(_fruit) {
 
 function createPriceInfo(_price, htmlContainer) {
     const price = document.createElement("span")
-    price.className="mx-2"
+    price.className = "mx-2"
     price.textContent = _price
     const dollarIcon = document.createElement("i")
     dollarIcon.className = "fa-solid fa-sack-dollar"
@@ -217,7 +216,7 @@ function createLandBox(_land) {
         landContainer.setAttribute("data-target", "#fruitModal")
         landContainer.addEventListener("click", () => {
             selectedLand = _land
-            prepareFruitModal()
+            prepareFruitModal(fruitModalTypes.PLANT)
         })
 
         // Add to detail container
@@ -337,7 +336,7 @@ function changeToSoilUI(element) {
     element.addEventListener("click", () => {
         element.setAttribute("data-toggle", "modal")
         element.setAttribute("data-target", "#fruitModal")
-        prepareFruitModal()
+        prepareFruitModal(fruitModalTypes.PLANT)
     })
 
     // Add to detail container
@@ -368,13 +367,6 @@ function createAddPlantButton() {
     addPlantButton.setAttribute("type", "button")
 
     return addPlantButton
-}
-
-//  Prepare before display FruitModal
-function prepareFruitModal() {
-    // Change FruitModal UI
-    currentFruitModalType = fruitModalTypes.PLANT
-    handleFruitModalType()
 }
 
 /**

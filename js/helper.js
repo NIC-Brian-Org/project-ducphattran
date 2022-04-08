@@ -21,11 +21,8 @@ function getLandById(_landId) {
 /**
  *  Handle different FruitModalType
  */
-/**
- *
- */
 function handleFruitModalType() {
-    if (fruitModalType === fruitModalTypes.INVENTORY) {
+    if (currentFruitModalType === fruitModalTypes.INVENTORY) {
         // Add Title
         document.getElementById("fruit-modal-header").textContent =
             INVENTORY_TITLE
@@ -52,7 +49,11 @@ function handleFruitModalType() {
     }
 }
 
-// Toggle class to all fruit boxes
+/**
+ * Toggle class to all fruit boxes
+ * @param {string} _baseClassName 
+ * @param {string} _className 
+ */
 function addClassToAllElements(_baseClassName, _className) {
     const elements = document.getElementsByClassName(_baseClassName)
     for (let i = 0; i < elements.length; i++) {
@@ -60,10 +61,30 @@ function addClassToAllElements(_baseClassName, _className) {
     }
 }
 
-// Toggle class to all fruit boxes
+/**
+ * Toggle class to all fruit boxes
+ * @param {string} _baseClassName 
+ * @param {string} _className 
+ */
 function removeClassToAllElements(_baseClassName, _className) {
     const elements = document.getElementsByClassName(_baseClassName)
     for (let i = 0; i < elements.length; i++) {
         elements[i].classList.remove(_className)
     }
+}
+
+/**
+ * Prepare before display FruitModal
+ * @param {string} _fruitModalType 
+ */
+ function prepareFruitModal(_fruitModalType) {
+    if (_fruitModalType === fruitModalTypes.INVENTORY) {
+        // Change to Inventory
+        currentFruitModalType = fruitModalTypes.INVENTORY
+    } else if (_fruitModalType === fruitModalTypes.PLANT) {
+        // Change to Plant
+        currentFruitModalType = fruitModalTypes.PLANT
+    }
+    
+    handleFruitModalType()
 }

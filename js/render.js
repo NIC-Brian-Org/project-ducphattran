@@ -5,16 +5,16 @@ renderFruitModal()
 // renderMarketModal()
 renderLands()
 // Start growing
-startGrowingAllLand(GROW_INCREMENT, SECONDS_TO_GROW)
+startGrowingAllLand(GROW_INCREMENT, SECONDS_TO_GROW * 1000)
 
-// Switch FruitModalType to "inventory"
+// Open Inventory modal
 document.getElementById("inventory").addEventListener("click", () => {
-    fruitModalType = "inventory"
-    handleFruitModalType()
+    prepareFruitModal(fruitModalTypes.INVENTORY)
 })
 
-// Plant event handler
+// Open add plant modal
 document.getElementById("plant-seed-button").addEventListener("click", () => {
+    prepareFruitModal(fruitModalTypes.PLANT)
     plant()
 })
 
