@@ -1,3 +1,8 @@
+"use strict"
+/**
+ *  This file contains functions for rendering and handling logic
+ */
+
 /**
  *  Get Fruit By Id
  * @param {int} _fruitId

@@ -1,4 +1,7 @@
 "use strict";
+/**
+ *  This file is a class representing fruits
+ */
 
 class Fruit {
     constructor(_fruitId, _name, _price, _quantity, _imageSrc) {

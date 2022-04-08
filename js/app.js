@@ -1,7 +1,7 @@
 "use strict"
 
 /**
- *  INITIALIZE
+ *  This file initializes the data before rendering
  */
 
 // Set data for the first attempt

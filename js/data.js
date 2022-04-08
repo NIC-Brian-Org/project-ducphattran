@@ -1,4 +1,7 @@
 "use strict";
+/**
+ *  This file contains mock up data for the first attempt
+ */
 const mockupData = {
     money: 10,
     lands:  [

@@ -1,3 +1,8 @@
+"use strict"
+/**
+ *  This file contains all global variables
+ */
+
 const storageName = Object.freeze({
     FRUIT: "fruits",
     LAND: "lands",

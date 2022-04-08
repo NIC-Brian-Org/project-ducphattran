@@ -1,4 +1,7 @@
 "use strict"
+/**
+ *  This file has a job that render html elements and start the game by increasing the  amount of fruits by time
+ */
 
 // Render UI
 renderFruitModal()

@@ -1,4 +1,7 @@
 "use strict"
+/**
+ *  This file is a class representing lands
+ */
 
 class Land {
     constructor(_landId, _status, _fruitId, _harvestableAmount) {
