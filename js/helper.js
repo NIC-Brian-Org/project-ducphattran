@@ -398,8 +398,9 @@ function harvestListener(_land, landContainer) {
 
             return fr
         })
-        // Re-render fruits
+        // Re-render modals that use fruit boxes
         renderFruitModal()
+        renderMarketModal()
         // Update land
         _land.harvest(fruit)
         // Update UI
@@ -470,8 +471,8 @@ function attachPriceAndDollarIcon(_price, htmlContainer) {
 }
 
 /**
- * 
- * @param {int} _totalValue 
+ * Update UI for the Market's total value
+ * @param {int} _totalValue
  */
 function updateMarketTotalValue(_totalValue) {
     document.getElementById("total-value").textContent = _totalValue
@@ -547,7 +548,6 @@ function createFruitLine(_fruit) {
         sellFruit(_fruit)
     })
 
-
     inputContainer.appendChild(inputElement)
     inputContainer.appendChild(availableAmountElement)
     inputContainer.appendChild(sellButtonElement)
@@ -560,8 +560,30 @@ function createFruitLine(_fruit) {
 }
 
 /**
- * 
- * @param {Fruit} _fruit 
+ * Update totalMoney and UI 
+ * @param {int} _money
+ */
+function updateTotalMoney(_money) {
+    totalMoney = _money
+    // Update HTMLElement
+    document.getElementById("money").textContent = _money
+}
+
+/**
+ *  Toggle success prompt when users sell fruits
+ */
+function showSellSuccessPrompt() {
+    document.getElementById("sell-success").classList.toggle("d-none")
+    // Fade
+    setTimeout(() => {
+        document.getElementById("sell-success").classList.toggle("d-none")
+    }, 700)
+}
+
+/**
+ *
+ * Sell a fruit
+ * @param {Fruit} _fruit
  */
 function sellFruit(_fruit) {
     const sellAmount = parseInt(
@@ -582,13 +604,54 @@ function sellFruit(_fruit) {
         renderFruitModal()
 
         // Update money
-        totalMoney += _fruit.price * sellAmount
+        updateTotalMoney(totalMoney + _fruit.price * sellAmount)
 
-        document.getElementById("money").textContent = totalMoney
-
-        $("#marketModal").modal("hide")
+        // Show prompt
+        showSellSuccessPrompt()
     }
+}
 
+/**
+ * Disable/Enable sell all button
+ * @param {string} status 
+ */
+function toggleSellAllButton(status) {
+    const sellAllButton = document.getElementById("sell-all-button")
+    if (status === "on") {
+        sellAllButton.classList.add("btn-primary")
+        sellAllButton.classList.remove("btn-secondary")
+        sellAllButton.disable = false
+    } else {
+        sellAllButton.classList.remove("btn-primary")
+        sellAllButton.classList.add("btn-secondary")
+        sellAllButton.disable = true
+    }
+}
+
+/**
+ *  Sell all the fruits in the inventory
+ */
+function sellAllFruitsListener() {
+    if (totalMarketValue > 0) {
+        fruits = fruits.map((fruit) => {
+            fruit.quantity = 0
+            return fruit
+        })
+
+        // Update money
+        updateTotalMoney(totalMoney + totalMarketValue)
+
+        // Re-render modals that use fruit boxes
+        renderMarketModal()
+        renderFruitModal()
+
+        // Show prompt
+        showSellSuccessPrompt()
+
+        // Disable button
+        toggleSellAllButton("off")
+    }
+    
 }
 
 /**

@@ -18,6 +18,11 @@ document.getElementById("plant-seed-button").addEventListener("click", () => {
     plantListener() // Trigger "Plant" button event
 })
 
+// Sell all  fruits in the market
+document
+    .getElementById("sell-all-button")
+    .addEventListener("click", sellAllFruitsListener)
+
 /**
  *
  *  Render Fruit Modal
@@ -79,6 +84,11 @@ function renderMarketModal() {
 
     // Update total value
     updateMarketTotalValue(totalMarketValue)
+    
+    // Enable button
+    if (totalMarketValue > 0) {
+        toggleSellAllButton("on")
+    }
 }
 
 /**
