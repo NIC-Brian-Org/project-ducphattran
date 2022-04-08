@@ -1,5 +1,6 @@
 "use strict";
 const mockupData = {
+    money: 10,
     lands:  [
         // Group 1
         {id: "1", status:  0, fruitId: "1", harvestAmount: 0},

@@ -7,6 +7,7 @@
 // Set data for the first attempt
 setFruits(mockupData.fruits)
 setLands(mockupData.lands)
+setMoney(mockupData.money)
 
 /**
  * Initialize fruits
@@ -36,6 +37,14 @@ function setLands(_lands) {
         // Update to global variable
         lands.push(newLand)
     })
+}
+
+/**
+ * 
+ * @param {int} _totalMoney 
+ */
+function setMoney(_totalMoney) {
+    document.getElementById("total-money").textContent = _totalMoney
 }
 
 /**
