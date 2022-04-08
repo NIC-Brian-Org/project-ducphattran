@@ -1,5 +1,7 @@
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-c66648af7eb3fe8bc4f294546bfd86ef473780cde1dea487d3c4ff354943c9ae.svg)](https://classroom.github.com/online_ide?assignment_repo_id=7549573&assignment_repo_type=AssignmentRepo)
 # Harvesting Fruits Game
+Link: https://nic-brian-org.github.io/project-ducphattran/
+
 ## Introduction
 This is a simple game where the user harvests the fruits by clicking on the green land. On the other hand, the user clicks the plus button to plant a seed. After being planted, the harvestable amount will increase after a fixed time. 
 In addition, the user can sell the fruits in the market to earn money.
