@@ -84,10 +84,13 @@ function renderMarketModal() {
 
     // Update total value
     updateMarketTotalValue(totalMarketValue)
-    
+
     // Enable button
     if (totalMarketValue > 0) {
         toggleSellAllButton("on")
+    } else {
+        // Disable button
+        toggleSellAllButton("off")
     }
 }
 

@@ -1,3 +1,8 @@
+const storageName = Object.freeze({
+    FRUIT: "fruits",
+    LAND: "lands",
+    MONEY: "money"
+})
 // Strings
 const INVENTORY_TITLE = "Inventory"
 const PLAN_SEED_TITLE = "Choose a seed to plant"
@@ -28,4 +33,4 @@ let growInterval = null
 // Total market value
 let totalMarketValue = 0
 // Total money
-let totalMoney = mockupData.money
+let totalMoney = 0

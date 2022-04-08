@@ -398,11 +398,15 @@ function harvestListener(_land, landContainer) {
 
             return fr
         })
+        // Update land
+        _land.harvest(fruit)
+        // Update to local storage
+        storeToLocalStorage(storageName.FRUIT, fruits)
+        storeToLocalStorage(storageName.LAND, lands)
+
         // Re-render modals that use fruit boxes
         renderFruitModal()
         renderMarketModal()
-        // Update land
-        _land.harvest(fruit)
         // Update UI
         changeToSoilBox(landContainer)
         // Reset growth
@@ -429,9 +433,12 @@ function plantListener() {
                 land.fruitId = selectedLand.fruitId
                 land.status = selectedLand.status
             }
-
             return land
         })
+
+        // Update to local storage
+        storeToLocalStorage(storageName.LAND, lands)
+
         // Close modal
         $("#fruitModal").modal("hide")
         // Switch to Green land
@@ -443,14 +450,13 @@ function plantListener() {
 
 /**
  * Update UI of harvestable amount
- * @param {HTMLElement} _landElement
- * @param {int} _newAmount
+ * @param {Land} _land
  */
-function updateHarvestableAmount(_landElement, _newAmount) {
+function updateHarvestableAmount(_land) {
     let harvestableAmount = document.querySelector(
-        `#${_landElement.id} span.harvest_amount`
+        `#land-${_land.id} span.harvest_amount`
     )
-    harvestableAmount.textContent = _newAmount
+    harvestableAmount.textContent = _land.harvestableAmount
 }
 
 /**
@@ -560,11 +566,14 @@ function createFruitLine(_fruit) {
 }
 
 /**
- * Update totalMoney and UI 
+ * Update totalMoney and UI
  * @param {int} _money
  */
 function updateTotalMoney(_money) {
+    // Update global variable
     totalMoney = _money
+    // Update local storage
+    storeToLocalStorage(storageName.MONEY, totalMoney)
     // Update HTMLElement
     document.getElementById("money").textContent = _money
 }
@@ -572,12 +581,27 @@ function updateTotalMoney(_money) {
 /**
  *  Toggle success prompt when users sell fruits
  */
-function showSellSuccessPrompt() {
-    document.getElementById("sell-success").classList.toggle("d-none")
-    // Fade
-    setTimeout(() => {
-        document.getElementById("sell-success").classList.toggle("d-none")
-    }, 700)
+function showSellPrompt(promptType, message) {
+    const promptElement = document.getElementById("sell-success")
+    promptElement.textContent = message
+    promptElement.classList.toggle("d-none")
+    if (promptType === "success") {
+        promptElement.classList.remove("alert-danger")
+        promptElement.classList.add("alert-success")
+        // Fade
+        setTimeout(() => {
+            promptElement.classList.toggle("d-none")
+        }, 700)
+    } else if (promptType === "error") {
+        document
+            .getElementById("sell-success")
+            .classList.remove("alert-success")
+        promptElement.classList.add("alert-danger")
+        // Fade
+        setTimeout(() => {
+            promptElement.classList.toggle("d-none")
+        }, 700)
+    }
 }
 
 /**
@@ -599,6 +623,9 @@ function sellFruit(_fruit) {
             return fruit
         })
 
+        // Update to local storage
+        storeToLocalStorage(storageName.FRUIT, fruits)
+
         // Re-render modals that use fruit boxes
         renderMarketModal()
         renderFruitModal()
@@ -607,13 +634,16 @@ function sellFruit(_fruit) {
         updateTotalMoney(totalMoney + _fruit.price * sellAmount)
 
         // Show prompt
-        showSellSuccessPrompt()
+        showSellPrompt("success", "Success!")
+    } else {
+        // Display error
+        showSellPrompt("error", "No quantity!")
     }
 }
 
 /**
  * Disable/Enable sell all button
- * @param {string} status 
+ * @param {string} status
  */
 function toggleSellAllButton(status) {
     const sellAllButton = document.getElementById("sell-all-button")
@@ -641,17 +671,19 @@ function sellAllFruitsListener() {
         // Update money
         updateTotalMoney(totalMoney + totalMarketValue)
 
+        // Update to local storage
+        storeToLocalStorage(storageName.FRUIT, fruits)
+
         // Re-render modals that use fruit boxes
         renderMarketModal()
         renderFruitModal()
-
-        // Show prompt
-        showSellSuccessPrompt()
-
+        
         // Disable button
         toggleSellAllButton("off")
+
+        // Show prompt
+        showSellPrompt("success", "Success!")
     }
-    
 }
 
 /**
