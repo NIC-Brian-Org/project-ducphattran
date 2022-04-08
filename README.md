@@ -10,7 +10,7 @@ In addition, the user can sell the fruits in the market to earn money.
 
 This game is made with plain Javascript. In addition, it uses other libraries to polish the UI:
 
-- [Bootstrap v4] (https://getbootstrap.com/docs/4.6/layout/overview/)
+- [Bootstrap v4](https://getbootstrap.com/docs/4.6/layout/overview/)
 - [Font Awesome v6](https://fontawesome.com/)
 
 ## Classes
