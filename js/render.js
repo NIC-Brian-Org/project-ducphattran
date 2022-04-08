@@ -58,7 +58,10 @@ function renderFruitModal() {
  *  Render Market Modal
  */
 function renderMarketModal() {
+    // Reset market's total value
+    totalMarketValue = 0
     const fruitLines = []
+
     for (let i = 0; i < fruits.length; i++) {
         const fruitLine = createFruitLine(fruits[i])
         fruitLines.push(fruitLine)
@@ -73,6 +76,9 @@ function renderMarketModal() {
     fruitLines.forEach((row) => {
         marketContainer.appendChild(row)
     })
+
+    // Update total value
+    updateMarketTotalValue(totalMarketValue)
 }
 
 /**

@@ -41,10 +41,10 @@ function setLands(_lands) {
 
 /**
  * 
- * @param {int} _totalMoney 
+ * @param {int} _money 
  */
-function setMoney(_totalMoney) {
-    document.getElementById("total-money").textContent = _totalMoney
+function setMoney(_money) {
+    document.getElementById("money").textContent = _money
 }
 
 /**

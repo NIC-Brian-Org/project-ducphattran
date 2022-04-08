@@ -25,5 +25,7 @@ let selectedFruit = null
 let selectedLand = null
 // Interval for automatic growth
 let growInterval = null
+// Total market value
+let totalMarketValue = 0
 // Total money
 let totalMoney = mockupData.money

@@ -321,9 +321,9 @@ function createLandBox(_land) {
 
 /**
  * Change to Land Box
- * @param {HTMLElement} element 
+ * @param {HTMLElement} element
  */
- function changeToLandBox(element) {
+function changeToLandBox(element) {
     element.classList.add("planted")
     const [landImage, landDetail] = element.childNodes
 
@@ -331,9 +331,14 @@ function createLandBox(_land) {
     landImage.src = "./assets/images/lands/land_big.png"
 
     // Add fruit image
-    const fruitImage = createFruitImage(selectedFruit.name, selectedFruit.imageSrc)
+    const fruitImage = createFruitImage(
+        selectedFruit.name,
+        selectedFruit.imageSrc
+    )
     // Add harvest amount
-    const harvestableAmount = createHarvestableAmount(selectedLand.harvestableAmount)
+    const harvestableAmount = createHarvestableAmount(
+        selectedLand.harvestableAmount
+    )
 
     // Add to detail container
     landDetail.innerHTML = ""
@@ -352,9 +357,9 @@ function createLandBox(_land) {
 
 /**
  * Change to Fruit Box
- * @param {HTMLElement} element 
+ * @param {HTMLElement} element
  */
- function changeToSoilBox(element) {
+function changeToSoilBox(element) {
     element.classList.remove("planted")
     const [landImage, landDetail] = element.childNodes
     // Change to soil background
@@ -374,13 +379,12 @@ function createLandBox(_land) {
     landDetail.appendChild(addPlantButton)
 }
 
-
 /**
  * Update quantity in Inventory and change to a Soil box
- * @param {Land} _land 
- * @param {HTMLElement} landContainer 
+ * @param {Land} _land
+ * @param {HTMLElement} landContainer
  */
- function harvestListener(_land, landContainer) {
+function harvestListener(_land, landContainer) {
     // Re-render land with new status
     const fruit = getFruitById(_land.fruitId)
     if (fruit) {
@@ -436,13 +440,12 @@ function plantListener() {
     }
 }
 
-
 /**
  * Update UI of harvestable amount
- * @param {HTMLElement} _landElement 
- * @param {int} _newAmount 
+ * @param {HTMLElement} _landElement
+ * @param {int} _newAmount
  */
- function updateHarvestableAmount(_landElement, _newAmount) {
+function updateHarvestableAmount(_landElement, _newAmount) {
     let harvestableAmount = document.querySelector(
         `#${_landElement.id} span.harvest_amount`
     )
@@ -450,9 +453,9 @@ function plantListener() {
 }
 
 /**
- * 
- * @param {int} _price 
- * @param {HTMLElement} htmlContainer 
+ *
+ * @param {int} _price
+ * @param {HTMLElement} htmlContainer
  */
 function attachPriceAndDollarIcon(_price, htmlContainer) {
     // Price text
@@ -467,11 +470,19 @@ function attachPriceAndDollarIcon(_price, htmlContainer) {
 }
 
 /**
+ * 
+ * @param {int} _totalValue 
+ */
+function updateMarketTotalValue(_totalValue) {
+    document.getElementById("total-value").textContent = _totalValue
+}
+
+/**
  * Create A Fruit Rectangle
- * @param {Fruit} _fruit 
+ * @param {Fruit} _fruit
  * @returns HTMLElement
  */
- function createFruitLine(_fruit) {
+function createFruitLine(_fruit) {
     // Container
     const row = document.createElement("row")
     row.classList.add(
@@ -483,6 +494,9 @@ function attachPriceAndDollarIcon(_price, htmlContainer) {
         "sell"
     )
     row.id = `market-fruit-${_fruit.id}`
+
+    // Update market total value
+    totalMarketValue += _fruit.price * _fruit.quantity
 
     // Image and Image
     const nameAndImage = document.createElement("div")
@@ -504,7 +518,7 @@ function attachPriceAndDollarIcon(_price, htmlContainer) {
     priceWrapper.className = "col-md text-center"
     const priceContainer = document.createElement("p")
     priceContainer.className = "text-white  bg-info p-2 rounded d-inline"
-   attachPriceAndDollarIcon(_fruit.price, priceContainer)
+    attachPriceAndDollarIcon(_fruit.price, priceContainer)
 
     priceWrapper.appendChild(priceContainer)
 
@@ -513,19 +527,26 @@ function attachPriceAndDollarIcon(_price, htmlContainer) {
     inputContainer.className = "col-md d-flex flex-row"
     // Input
     const inputElement = document.createElement("input")
+    inputElement.id = `market-fruit-${_fruit.id}-input`
     inputElement.className = "text-center"
     inputElement.type = "number"
     inputElement.min = 0
     inputElement.value = 0
+
     // Available amount to sell
     const availableAmountElement = document.createElement("p")
     availableAmountElement.className = "p-1 m-1"
     availableAmountElement.innerHTML = `/<span class="mx-1">(${_fruit.quantity})</span>`
     // Sell button
     const sellButtonElement = document.createElement("button")
+    sellButtonElement.id = `market-fruit-${_fruit.id}-sell-btn`
     sellButtonElement.className = "btn btn-warning"
     sellButtonElement.type = "button"
     sellButtonElement.textContent = "Sell"
+    sellButtonElement.addEventListener("click", () => {
+        sellFruit(_fruit)
+    })
+
 
     inputContainer.appendChild(inputElement)
     inputContainer.appendChild(availableAmountElement)
@@ -538,10 +559,41 @@ function attachPriceAndDollarIcon(_price, htmlContainer) {
     return row
 }
 
+/**
+ * 
+ * @param {Fruit} _fruit 
+ */
+function sellFruit(_fruit) {
+    const sellAmount = parseInt(
+        document.getElementById(`market-fruit-${_fruit.id}-input`).value
+    )
+    if (sellAmount > 0 && sellAmount <= _fruit.quantity) {
+        // Update fruit's quantity
+        fruits.map((fruit) => {
+            if (fruit.id === _fruit.id) {
+                fruit.quantity -= sellAmount
+            }
+
+            return fruit
+        })
+
+        // Re-render modals that use fruit boxes
+        renderMarketModal()
+        renderFruitModal()
+
+        // Update money
+        totalMoney += _fruit.price * sellAmount
+
+        document.getElementById("money").textContent = totalMoney
+
+        $("#marketModal").modal("hide")
+    }
+
+}
 
 /**
  * Toggle error message on seed modal
- * @param {string} action 
+ * @param {string} action
  */
 function toggleSeedModalError(action = "off") {
     if (action == "on") {
