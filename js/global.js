@@ -3,64 +3,14 @@
 let fruits = []
 // List of lands
 let lands = []
-// Detect which invokes the Fruit Modal
-let fruitModalType = "inventory"
+// Set default fruit modal for inventory
+let currentFruitModalType = fruitModalTypes.INVENTORY
 // Selected fruit box
 let selectedFruit = null
 // Selected land box
 let selectedLand = null
 // Interval for automatic growth
 let growInterval = null
-// Seconds to increase harvestable amount of lands
-const SECONDS_TO_GROW = 2
-// Amount to increase harvestable amount
-const GROW_INCREMENT = 1
-
-/**
- *  Handle different FruitModalType
- */
-function handleFruitModalType() {
-    if (fruitModalType === "inventory") {
-        // Add Title
-        document.getElementById("fruit-modal-header").textContent = "Inventory"
-        // Hide "Plant" button
-        document.getElementById("plant-seed-button").classList.add("d-none")
-        // Show "Close" button
-        document
-            .getElementById("fruit-modal-close-button")
-            .classList.remove("d-none")
-        // remove class "fruit" to list of fruits
-        removeClassToAllElements("inventory-item", "fruit")
-    } else {
-        // Add Title
-        document.getElementById("fruit-modal-header").textContent =
-            "Choose a seed to plant"
-        // Show "Plant" button
-        document.getElementById("plant-seed-button").classList.remove("d-none")
-        // Remove "Close" button
-        document
-            .getElementById("fruit-modal-close-button")
-            .classList.add("d-none")
-        // add class "fruit" to list of fruits
-        addClassToAllElements("inventory-item", "fruit")
-    }
-}
-
-// Toggle class to all fruit boxes
-function addClassToAllElements(_baseClassName, _className) {
-    const elements = document.getElementsByClassName(_baseClassName)
-    for (let i = 0; i < elements.length; i++) {
-        elements[i].classList.add(_className)
-    }
-}
-
-// Toggle class to all fruit boxes
-function removeClassToAllElements(_baseClassName, _className) {
-    const elements = document.getElementsByClassName(_baseClassName)
-    for (let i = 0; i < elements.length; i++) {
-        elements[i].classList.remove(_className)
-    }
-}
 
 /**
  *
@@ -101,7 +51,7 @@ function createFruitBox(_fruit) {
 
     // Add event handler if users select a seed to plant
     col.addEventListener("click", () => {
-        if (fruitModalType === "plant") {
+        if (currentFruitModalType === fruitModalTypes.PLANT) {
             selectedFruit = _fruit
             toggleSelectSeed(col)
         }
@@ -185,9 +135,7 @@ function createFruitLine(_fruit) {
 
     return row
 }
-/* <span class="mr-2">6</span><i
-                                        class="fa-solid fa-sack-dollar"></i></p>
-                                         */
+
 function createPriceInfo(_price, htmlContainer) {
     const price = document.createElement("span")
     price.className="mx-2"
@@ -425,7 +373,7 @@ function createAddPlantButton() {
 //  Prepare before display FruitModal
 function prepareFruitModal() {
     // Change FruitModal UI
-    fruitModalType = "plant"
+    currentFruitModalType = fruitModalTypes.PLANT
     handleFruitModalType()
 }
 
