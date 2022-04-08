@@ -8,21 +8,25 @@
 setFruits(mockupData.fruits)
 setLands(mockupData.lands)
 
-
+/**
+ * Initialize fruits
+ * @param {array} _fruits 
+ */
 function setFruits(_fruits) {
     // Create Fruit objects
     _fruits.forEach((fruit) => {
         const { id, name, price, quantity, imageSrc } = fruit
         const newFruit = new Fruit(id, name, price, quantity, imageSrc)
-        
+
         // Update to global variable
         fruits.push(newFruit)
     })
 }
 
 /**
- *   Initialize lands
- * */
+ * Initialize lands
+ * @param {array} _lands 
+ */
 function setLands(_lands) {
     // Create land objects
     _lands.forEach((land) => {
