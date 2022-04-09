@@ -89,3 +89,9 @@ h1 {
 .inventory-item {
     background-color: #b9c1cd;
 }
+
+#money-container {
+    border-radius: 10px;
+    background-color: #7A89C2;
+    color: white
+}
